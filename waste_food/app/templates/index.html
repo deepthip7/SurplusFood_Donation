@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome | FoodBridge</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body class="welcome">
+  <div class="welcome-container">
+    <h1>Welcome to <span>FoodBridge</span> 🍽</h1>
+    <p>Connecting restaurants and volunteers to eliminate hunger and reduce food waste.</p>
+    <button onclick="openPage('login')">Get Started</button>
+  </div>
+
+  <script>
+    function openPage(page) {
+      window.location.href = page;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,247 @@
+/* ========== Global Styles ========== */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #FFF8F0;
+  color: #333;
+}
+
+h1, h2, h3 {
+  margin: 0 0 15px 0;
+  color: #FF6B6B;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* ========== Welcome / Index Page ========== */
+body.welcome {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  text-align: center;
+  background: linear-gradient(135deg, #FFF8F0, #FFDAB9);
+}
+
+.welcome-container h1 span {
+  color: #FF6B6B;
+}
+
+.welcome-container button {
+  margin-top: 20px;
+  padding: 15px 30px;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 12px;
+  background-color: #FF6B6B;
+  color: #fff;
+  transition: 0.2s;
+}
+
+.welcome-container button:hover {
+  background-color: #FF8C6B;
+  transform: scale(1.05);
+}
+
+/* ========== Login Page ========== */
+body.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #FFF8F0, #FFDAB9);
+}
+
+.login-container {
+  max-width: 400px;
+  width: 90%;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  text-align: center;
+}
+
+.login-container input,
+.login-container select {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0 15px 0;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+button.submit-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  font-size: 1rem;
+  background-color: #FF6B6B;
+  color: #fff;
+  transition: 0.2s;
+}
+
+button.submit-btn:hover {
+  background-color: #FF8C6B;
+  transform: scale(1.03);
+}
+
+/* ========== Dashboard Pages (Restaurant & Volunteer) ========== */
+body.dashboard-page {
+  min-height: 100vh;
+  padding: 20px;
+  background: linear-gradient(135deg, #FFF8F0, #FFDAB9);
+}
+
+.dashboard-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.dashboard-container h2, .dashboard-container h3 {
+  margin-bottom: 20px;
+}
+
+/* Form Card */
+form.card {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  margin-bottom: 25px;
+  text-align: left;
+}
+
+form.card label {
+  display: block;
+  margin: 10px 0 5px 0;
+  font-weight: bold;
+}
+
+form.card input, form.card select, form.card button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+form.card button {
+  margin-top: 15px;
+  background-color: #FF6B6B;
+  color: #fff;
+  border: none;
+  font-size: 1rem;
+  transition: 0.2s;
+}
+
+form.card button:hover {
+  background-color: #FF8C6B;
+  transform: scale(1.03);
+}
+
+/* Food List Cards */
+ul#foodList, ul#needList {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+ul#foodList li, ul#needList li {
+  background-color: #fff;
+  padding: 15px 20px;
+  border-radius: 15px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  text-align: left;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+}
+
+ul#foodList li:hover, ul#needList li:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+ul#foodList li p {
+  margin: 5px 0;
+}
+
+/* Temperature Icons */
+.temperature {
+  margin-left: 5px;
+  font-size: 0.9rem;
+}
+
+/* Delivered Label */
+.delivered-label {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #C1E1C1;
+  padding: 4px 8px;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* Volunteer Summary Card */
+.summary {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 25px;
+  font-weight: bold;
+  color: #555;
+}
+
+/* Toast Notification */
+.toast {
+  visibility: hidden;
+  min-width: 250px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 8px;
+  padding: 10px;
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+}
+
+.toast.show {
+  visibility: visible;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@keyframes fadein {
+  from { bottom: 0; opacity: 0; }
+  to { bottom: 20px; opacity: 1; }
+}
+
+@keyframes fadeout {
+  from { bottom: 20px; opacity: 1; }
+  to { bottom: 0; opacity: 0; }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+  .dashboard-container {
+    padding: 10px;
+  }
+
+  ul#foodList, ul#needList {
+    flex-direction: column;
+  }
+
+  form.card input, form.card select, form.card button {
+    font-size: 0.95rem;
+  }
+}

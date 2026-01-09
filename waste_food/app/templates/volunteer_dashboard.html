@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Volunteer Dashboard | FoodBridge</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body class="dashboard-page">
+
+  <!-- Home / Login button -->
+  <div class="nav-home">
+    <a href="{% url 'login' %}" class="home-btn">🏠 Home / Login</a>
+  </div>
+
+  <div class="dashboard-container">
+    <h2>🤝 Volunteer Dashboard</h2>
+
+    <div class="summary card" id="summary">
+      <div>Total Donations: 0</div>
+      <div>Assigned: 0</div>
+      <div>Delivered: 0</div>
+    </div>
+
+    <h3>Available Restaurant Donations:</h3>
+    <ul id="foodList"></ul>
+
+    <h3>Nearby Areas Needing Food:</h3>
+    <ul id="needList"></ul>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+    const foodList = document.getElementById('foodList');
+    const needList = document.getElementById('needList');
+    const summary = document.getElementById('summary');
+    const toast = document.getElementById('toast');
+
+    const needyAreas = [
+      "Slum Area - Gandhi Nagar",
+      "Old Age Home - Lakshmi Layout",
+      "Children Shelter - Green Road",
+      "Community Hall - West End"
+    ];
+
+    let foods = JSON.parse(localStorage.getItem('foods')) || [];
+
+    function updateSummary() {
+      const total = foods.length;
+      const delivered = foods.filter(f => f.delivered).length;
+      const assigned = foods.filter(f => f.assigned && !f.delivered).length;
+      summary.innerHTML = `
+        <div>Total Donations: ${total}</div>
+        <div>Assigned: ${assigned}</div>
+        <div>Delivered: ${delivered}</div>
+      `;
+    }
+
+    function showFoods() {
+      foodList.innerHTML = '';
+      foods.forEach((item, index) => {
+        const li = document.createElement('li');
+        li.classList.add('card');
+        li.innerHTML = `
+          ${item.delivered ? '<div class="delivered-label">✅ Delivered</div>' : ''}
+          <strong>${item.name}</strong> — ${item.quantity}
+          <span class="temperature">${item.temperature === 'Hot' ? '🔥' : item.temperature === 'Cold' ? '❄' : '🌡'}</span><br>
+          📍 ${item.address}<br>
+          ${!item.delivered ? `
+            <select id="area-${index}">
+              <option value="">Select Area</option>
+              ${needyAreas.map(a => `<option value="${a}">${a}</option>`).join('')}
+            </select>
+            <button onclick="assignDelivery(${index})">
+              ${item.assigned ? '🚚 Assigned' : 'Deliver'}
+            </button>
+          ` : ''}
+        `;
+        foodList.appendChild(li);
+      });
+      updateSummary();
+    }
+
+    function showNeeds() {
+      needList.innerHTML = '';
+      needyAreas.forEach((area) => {
+        const li = document.createElement('li');
+        li.textContent = area;
+        needList.appendChild(li);
+      });
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.className = "toast show";
+      setTimeout(() => { toast.className = "toast"; }, 3000);
+    }
+
+    function assignDelivery(index) {
+      const restaurant = foods[index];
+      const areaSelect = document.getElementById(`area-${index}`);
+      const selectedArea = areaSelect.value;
+      if (!selectedArea) {
+        alert("Please select an area first!");
+        return;
+      }
+
+      restaurant.assigned = true;
+      restaurant.delivered = true;
+      localStorage.setItem('foods', JSON.stringify(foods));
+      showToast(`🚗 "${restaurant.name}" delivered to ${selectedArea}!`);
+      showFoods();
+    }
+
+    showFoods();
+    showNeeds();
+  </script>
+</body>
+</html>

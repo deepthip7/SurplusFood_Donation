@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | FoodBridge</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body class="login-page">
+
+  <div class="login-container card">
+    <h2>🔑 Login to FoodBridge</h2>
+    <p>Select your role and enter details to continue.</p>
+
+    <form method="POST" action="{% url 'login' %}">
+      {% csrf_token %}
+
+      <label for="role">Role:</label>
+      <select name="role" id="role" required>
+        <option value="">-- Choose your role --</option>
+        <option value="restaurant">Restaurant</option>
+        <option value="volunteer">Volunteer</option>
+      </select>
+
+      <label for="username">Username:</label>
+      <input type="text" name="username" id="username" placeholder="Enter your username" required>
+
+      <label for="password">Password:</label>
+      <input type="password" name="password" id="password" placeholder="Enter your password" required>
+
+      <button type="submit" class="submit-btn">Login</button>
+    </form>
+  </div>
+</body>
+</html>

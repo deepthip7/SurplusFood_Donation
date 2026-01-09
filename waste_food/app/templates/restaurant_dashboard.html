@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurant Dashboard | FoodBridge</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body class="dashboard-page">
+
+  <!-- Home / Login button -->
+  <div class="nav-home">
+    <a href="{% url 'login' %}" class="home-btn">🏠 Home / Login</a>
+  </div>
+
+  <div class="dashboard-container">
+    <h2>🍽 Restaurant Dashboard</h2>
+
+    <form id="foodForm" class="card">
+      <label>Food Name:</label>
+      <input type="text" id="foodName" placeholder="e.g., Fried Rice" required>
+
+      <label>Quantity (plates or kg):</label>
+      <input type="text" id="quantity" placeholder="Enter quantity" required>
+
+      <label>Temperature (Hot/Cold/Room):</label>
+      <input type="text" id="temperature" placeholder="e.g., Hot" required>
+
+      <label>Restaurant Address:</label>
+      <input type="text" id="address" placeholder="Enter restaurant address" required>
+
+      <button type="submit" class="submit-btn">Add Food</button>
+    </form>
+
+    <h3>Added Food Items:</h3>
+    <ul id="foodList"></ul>
+  </div>
+
+  <script>
+    const foodForm = document.getElementById('foodForm');
+    const foodList = document.getElementById('foodList');
+
+    foodForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const food = {
+        name: document.getElementById('foodName').value,
+        quantity: document.getElementById('quantity').value,
+        temperature: document.getElementById('temperature').value,
+        address: document.getElementById('address').value,
+        delivered: false,
+        assigned: false
+      };
+
+      let foods = JSON.parse(localStorage.getItem('foods')) || [];
+      foods.push(food);
+      localStorage.setItem('foods', JSON.stringify(foods));
+
+      displayFoods();
+      foodForm.reset();
+    });
+
+    function displayFoods() {
+      foodList.innerHTML = '';
+      const foods = JSON.parse(localStorage.getItem('foods')) || [];
+      foods.forEach((item) => {
+        const li = document.createElement('li');
+        li.classList.add('card');
+        li.innerHTML = `
+          <strong>${item.name}</strong> — ${item.quantity},
+          <span class="temperature">${item.temperature === 'Hot' ? '🔥' : item.temperature === 'Cold' ? '❄' : '🌡'}</span>
+          <br>📍 ${item.address}
+        `;
+        foodList.appendChild(li);
+      });
+    }
+
+    displayFoods();
+  </script>
+</body>
+</html>
